@@ -7,3 +7,8 @@
 ---
 
 A modern, statically-typed, and mostly type-safe programming language.
+
+## Features
+
+- Default arguments, named parameters, and variadic parameters (including variadic named parameters)
+- Type inference, generics with type constraints, and opt-in dynamic typing
