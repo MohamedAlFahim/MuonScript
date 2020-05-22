@@ -19,7 +19,7 @@ A modern, statically-typed, and mostly type-safe programming language.
 
 ### Hello World
 
-**main.mu**
+📄 **main.mu**
 ```
 ###
 Print Hello world! followed by a newline.
