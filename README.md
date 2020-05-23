@@ -39,3 +39,20 @@ programs exit with code 0.
 $ muonscript run main.mu
 Hello world!
 ```
+
+### Command-Line Arguments
+
+📄 **main.mu**
+```
+# __args__ has the type DynamicList!(String)
+for each_arg in __args__ {
+    # The f string prefix is used for embedding values inside strings
+    std.println(f'> ${each_arg}')
+}
+```
+#### Output
+```
+$ muonscript run main.mu "Argument 1" "Argument 2"
+> Argument 1
+> Argument 2
+```
