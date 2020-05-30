@@ -54,7 +54,7 @@ $ muonscript run main.mu "Argument 1" "Argument 2"
 > Argument 2
 ```
 
-### Modules
+### Guessing Game
 
 📄 **package/guessing_game.mu**
 ```
