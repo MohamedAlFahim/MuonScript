@@ -1,0 +1,35 @@
+{
+  "name": "muonscript",
+  "rules": {
+    "muonscript_module": {
+      "type": "REPEAT",
+      "content": {
+        "type": "SYMBOL",
+        "name": "_statement"
+      }
+    },
+    "_statement": {
+      "type": "STRING",
+      "value": "TODO"
+    },
+    "identifier": {
+      "type": "PATTERN",
+      "value": "[A-Za-z][A-Za-z0-9_]*"
+    },
+    "number": {
+      "type": "PATTERN",
+      "value": "\\d+\\.?\\d*"
+    }
+  },
+  "extras": [
+    {
+      "type": "PATTERN",
+      "value": "\\s"
+    }
+  ],
+  "conflicts": [],
+  "externals": [],
+  "inline": [],
+  "supertypes": []
+}
+
