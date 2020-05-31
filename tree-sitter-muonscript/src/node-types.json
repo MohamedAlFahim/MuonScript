@@ -1,18 +1,8 @@
 [
   {
-    "type": "import_statement",
+    "type": "dotted_name",
     "named": true,
     "fields": {
-      "alias": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
       "name": {
         "multiple": true,
         "required": true,
@@ -30,6 +20,84 @@
     }
   },
   {
+    "type": "import_from_statement",
+    "named": true,
+    "fields": {
+      "imported_members": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "imported_module_members",
+            "named": true
+          }
+        ]
+      },
+      "module_path": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "dotted_name",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "import_statement",
+    "named": true,
+    "fields": {
+      "alias": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "module_path": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "dotted_name",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "imported_module_members",
+    "named": true,
+    "fields": {
+      "alias": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "module_member": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "muonscript_module",
     "named": true,
     "fields": {},
@@ -38,6 +106,10 @@
       "required": false,
       "types": [
         {
+          "type": "import_from_statement",
+          "named": true
+        },
+        {
           "type": "import_statement",
           "named": true
         }
@@ -45,11 +117,19 @@
     }
   },
   {
+    "type": ",",
+    "named": false
+  },
+  {
     "type": ".",
     "named": false
   },
   {
     "type": "as",
+    "named": false
+  },
+  {
+    "type": "from",
     "named": false
   },
   {
