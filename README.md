@@ -1,5 +1,7 @@
 # MuonScript
 
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ---
@@ -22,7 +24,7 @@ A modern, statically-typed, and mostly type-safe programming language, inspired 
 
 ### Hello World
 
-📄 **main.mu**
+**main.mu**
 ```
 // Print Hello world! followed by a newline.
 // It is equivalent to
@@ -30,7 +32,7 @@ A modern, statically-typed, and mostly type-safe programming language, inspired 
 // or std.print('Hello world!', end='\n').
 std.println('Hello world!')
 ```
-#### Output
+#### <i class="ri-terminal-line"></i>&nbsp; Output
 ```
 $ muonscript run main.mu
 Hello world!
@@ -38,7 +40,7 @@ Hello world!
 
 ### Command-Line Arguments
 
-📄 **main.mu**
+**main.mu**
 ```
 // __args__ has the type DynamicList!(String).
 for each_arg in __args__ {
@@ -49,7 +51,7 @@ for each_arg in __args__ {
     // or std.println(each_arg, start='> ')
 }
 ```
-#### Output
+#### <i class="ri-terminal-line"></i>&nbsp; Output
 ```
 $ muonscript run main.mu "Argument 1" "Argument 2"
 > Argument 1
@@ -58,7 +60,7 @@ $ muonscript run main.mu "Argument 1" "Argument 2"
 
 ### Guessing Game
 
-📄 **package/guessing_game.mu**
+**package/guessing_game.mu**
 ```
 // SECRET_NUMBER is inferred to be of type Float,
 // so you don't have to write
@@ -84,14 +86,37 @@ export func guessing_game() {
             std.println('You won!')
             return
         }
+        else {
+            std.println('Wrong number')
+        }
     }
     std.println('You lost.')
 }
 ```
 
-📄 **main.mu**
+**main.mu**
 ```
 from package.guessing_game import guessing_game as game
 
 game()
 ```
+#### <i class="ri-terminal-line"></i>&nbsp; Output
+```
+$ muonscript run main.mu
+This is guess 1
+2 guesses remaining
+Your guess: 3.15
+Wrong number
+This is guess 2
+1 guesses remaining
+Your guess: 3.14
+You won!
+```
+
+## Copyright
+
+**License:** [Apache License 2.0](./LICENSE)
+
+**Documentation:** [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+
+**Icons Used:** From [Remix Icon](https://github.com/Remix-Design/remixicon)
