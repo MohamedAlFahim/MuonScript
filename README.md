@@ -1,7 +1,5 @@
 # MuonScript
 
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ---
@@ -32,7 +30,7 @@ A modern, statically-typed, and mostly type-safe programming language, inspired 
 // or std.print('Hello world!', end='\n').
 std.println('Hello world!')
 ```
-#### <i class="ri-terminal-line"></i>&nbsp; Output
+#### > Output
 ```
 $ muonscript run main.mu
 Hello world!
@@ -51,7 +49,7 @@ for each_arg in __args__ {
     // or std.println(each_arg, start='> ')
 }
 ```
-#### <i class="ri-terminal-line"></i>&nbsp; Output
+#### > Output
 ```
 $ muonscript run main.mu "Argument 1" "Argument 2"
 > Argument 1
@@ -100,7 +98,7 @@ from package.guessing_game import guessing_game as game
 
 game()
 ```
-#### <i class="ri-terminal-line"></i>&nbsp; Output
+#### > Output
 ```
 $ muonscript run main.mu
 This is guess 1
@@ -115,8 +113,6 @@ You won!
 
 ## Copyright
 
-**License:** [Apache License 2.0](./LICENSE)
+**Software License:** [Apache License 2.0](./LICENSE)
 
-**Documentation:** [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
-
-**Icons Used:** From [Remix Icon](https://github.com/Remix-Design/remixicon)
+**Documentation License:** [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
