@@ -74,9 +74,24 @@
   {
     "type": "imported_module_members",
     "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "module_member_import",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "module_member_import",
+    "named": true,
     "fields": {
       "alias": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
@@ -86,7 +101,7 @@
         ]
       },
       "module_member": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {

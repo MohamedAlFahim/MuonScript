@@ -1,10 +1,13 @@
 module.exports = grammar({
   name: "muonscript",
 
+  extras: ($) => [$.comment, /\s+/],
+
   word: ($) => $.identifier,
 
   rules: {
     muonscript_module: ($) => repeat($._statement),
+    comment: ($) => token(seq("//", /.*/)),
     _statement: ($) => choice($.import_statement, $.import_from_statement),
     import_statement: ($) =>
       seq(
@@ -20,13 +23,12 @@ module.exports = grammar({
         field("imported_members", $.imported_module_members)
       ),
     dotted_name: ($) => field("name", dotSep($.identifier)),
-    imported_module_members: ($) =>
-      commaSep(
-        seq(
-          field("module_member", $.identifier),
-          optional(seq("as", field("alias", $.identifier)))
-        )
+    module_member_import: ($) =>
+      seq(
+        field("module_member", $.identifier),
+        optional(seq("as", field("alias", $.identifier)))
       ),
+    imported_module_members: ($) => commaSep($.module_member_import),
 
     // Terminal
     identifier: ($) => /[A-Za-z][A-Za-z0-9_]*/,
