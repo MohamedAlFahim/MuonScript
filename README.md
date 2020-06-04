@@ -18,6 +18,19 @@ A modern, statically-typed, and mostly type-safe programming language, inspired 
 - Sandbox inspired by [Deno](https://deno.land/)
 - Iterators
 
+## Design Choices and Philosophy
+
+### From the Beginning
+
+- The programmer should always initialize constants and variables
+- There should be only a few ways to accomplish tasks, and they should be obvious
+- Undefined behaviour should never occur
+
+### In the Future
+
+- The MuonScript compiler should optimize whatever it safely can
+- Programs shouldn't do at run-time what can be done at compile-time
+
 ## Examples
 
 ### Hello World
@@ -91,7 +104,6 @@ export func guessing_game() {
     std.println('You lost.')
 }
 ```
-
 **main.mu**
 ```
 from package.guessing_game import guessing_game as game
@@ -109,6 +121,51 @@ This is guess 2
 1 guesses remaining
 Your guess: 3.14
 You won!
+```
+
+### Dog
+
+**main.mu**
+```
+class Dog {
+    const name: std.String  // Note that name is an instance variable.
+    // We can make name const because we will only assign
+    // a value to it once.
+    static count = 0  // count is a class variable
+
+    func __init__(name = '?') {
+        /// Constructor method of Dog class.
+        /// name: The dog's name.
+        // The comments above are documentation comments
+        // because they have three slashes instead of two.
+        // if no name is passed, the default name ? will be used
+        self.name = name
+        // Note that forgetting to initialize the name
+        // instance variable in the constructor
+        // will result in an error.
+        cls.count += 1
+    }
+
+    func bark() {
+        std.print(f'${self.name}: ')
+        std.println('Woof!')
+    }
+}
+
+fido = Dog('Fido')
+fido.bark()
+std.println(fido.name)
+nameless = Dog()
+nameless.bark()
+std.println(Dog.count)
+```
+#### > Output
+```
+$ muonscript run main.mu
+Fido: Woof!
+Fido
+?: Woof!
+2
 ```
 
 ## Copyright
