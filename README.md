@@ -8,13 +8,14 @@
 
 ---
 
-A modern, statically-typed, and mostly type-safe programming language, inspired by Python and many other popular programming languages.
+A modern, statically-typed, and mostly type-safe programming language, inspired by Python and many other popular programming languages. The MuonScript "compiler" compiles source code to bytecode, to be run by the interpreter.
 
 ## Features
 
 - Default arguments, named parameters, and variadic parameters (including variadic named parameters)
 - Type inference, generics with type constraints, and opt-in dynamic typing
 - Modules, with control over exported members, and packages
+- Class member visibility (i.e. `public` and `private`)
 - Sandbox inspired by [Deno](https://deno.land/)
 - Iterators
 
@@ -23,8 +24,10 @@ A modern, statically-typed, and mostly type-safe programming language, inspired 
 ### From the Beginning
 
 - The programmer should always initialize constants and variables
+- If a function is supposed to return a value, the programmer must return a value somewhere in the function
 - There should be only a few ways to accomplish tasks, and they should be obvious
 - Undefined behaviour should never occur
+- The grammar shouldn't be too bloated
 
 ### In the Future
 
@@ -166,6 +169,34 @@ Fido: Woof!
 Fido
 ?: Woof!
 2
+```
+
+### Types From Operations
+
+**main.mu**
+```
+// Note that the three type annotations below are optional
+// as they can be inferred.
+const A: std.Int = 20
+const B: std.Int = 2
+const C: std.Float = 0.5
+
+const SUM = A + B  // SUM is of type Int
+const SUM_2 = A + C  // SUM_2 is of type Float
+const DIFFERENCE = A - B  // DIFFERENCE is of type Int
+const DIFFERENCE_2 = A - C  // DIFFERENCE_2 is of type Float
+const PRODUCT = A * B  // PRODUCT is of type Int
+const PRODUCT_2 = A * C  // PRODUCT_2 is of type Float
+const QUOTIENT = A / B  // QUOTIENT is of type Float
+```
+
+## Building
+
+### Tree-sitter Parser
+
+```
+cd tree-sitter-muonscript
+tree-sitter generate && tree-sitter build-wasm
 ```
 
 ## Copyright
