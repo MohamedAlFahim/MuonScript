@@ -1,5 +1,20 @@
 [
   {
+    "type": "doc_comment_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "doc_comment",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "dotted_name",
     "named": true,
     "fields": {
@@ -127,6 +142,54 @@
         {
           "type": "import_statement",
           "named": true
+        },
+        {
+          "type": "named_function_definition",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "named_function_definition",
+    "named": true,
+    "fields": {
+      "doc": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "doc_comment_block",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "import_from_statement",
+          "named": true
+        },
+        {
+          "type": "import_statement",
+          "named": true
+        },
+        {
+          "type": "named_function_definition",
+          "named": true
         }
       ]
     }
@@ -144,7 +207,15 @@
     "named": false
   },
   {
+    "type": "doc_comment",
+    "named": true
+  },
+  {
     "type": "from",
+    "named": false
+  },
+  {
+    "type": "func",
     "named": false
   },
   {
@@ -153,6 +224,14 @@
   },
   {
     "type": "import",
+    "named": false
+  },
+  {
+    "type": "{",
+    "named": false
+  },
+  {
+    "type": "}",
     "named": false
   }
 ]

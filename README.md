@@ -199,6 +199,13 @@ cd tree-sitter-muonscript
 tree-sitter generate && tree-sitter build-wasm
 ```
 
+#### Quickly Developing Grammar
+If you want to change the grammar.js file and quickly preview the changes, you can keep the browser tab with "http://127.0.0.1:8000/" open and then run:
+```
+tree-sitter generate && tree-sitter build-wasm && tree-sitter web-ui --quiet
+```
+and refresh the browser tab, after each time you change the grammar.js.
+
 ## Copyright
 
 **Software License:** [Apache License 2.0](./LICENSE)

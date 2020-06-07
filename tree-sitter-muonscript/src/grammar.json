@@ -20,9 +20,32 @@
           },
           {
             "type": "PATTERN",
+            "value": "[^/].*"
+          }
+        ]
+      }
+    },
+    "doc_comment": {
+      "type": "TOKEN",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "///"
+          },
+          {
+            "type": "PATTERN",
             "value": ".*"
           }
         ]
+      }
+    },
+    "doc_comment_block": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "SYMBOL",
+        "name": "doc_comment"
       }
     },
     "_statement": {
@@ -35,6 +58,10 @@
         {
           "type": "SYMBOL",
           "name": "import_from_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "named_function_definition"
         }
       ]
     },
@@ -198,6 +225,54 @@
               }
             ]
           }
+        }
+      ]
+    },
+    "named_function_definition": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "func"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "doc",
+              "content": {
+                "type": "SYMBOL",
+                "name": "doc_comment_block"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_statement"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "}"
         }
       ]
     },

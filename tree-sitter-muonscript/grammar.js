@@ -7,8 +7,15 @@ module.exports = grammar({
 
   rules: {
     muonscript_module: ($) => repeat($._statement),
-    comment: ($) => token(seq("//", /.*/)),
-    _statement: ($) => choice($.import_statement, $.import_from_statement),
+    comment: ($) => token(seq("//", /[^/].*/)),
+    doc_comment: ($) => token(seq("///", /.*/)),
+    doc_comment_block: ($) => repeat1($.doc_comment),
+    _statement: ($) =>
+      choice(
+        $.import_statement,
+        $.import_from_statement,
+        $.named_function_definition
+      ),
     import_statement: ($) =>
       seq(
         "import",
@@ -29,6 +36,8 @@ module.exports = grammar({
         optional(seq("as", field("alias", $.identifier)))
       ),
     imported_module_members: ($) => commaSep($.module_member_import),
+    named_function_definition: ($) =>
+      seq("func", field("name", $.identifier), "{", optionalDoc($), repeat($._statement), "}"),
 
     // Terminal
     identifier: ($) => /[A-Za-z][A-Za-z0-9_]*/,
@@ -42,4 +51,8 @@ function commaSep(rule) {
 
 function dotSep(rule) {
   return seq(rule, repeat(seq(".", rule)));
+}
+
+function optionalDoc(dollar) {
+  return optional(field("doc", dollar.doc_comment_block))
 }
