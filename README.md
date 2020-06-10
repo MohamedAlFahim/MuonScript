@@ -13,7 +13,7 @@ A modern, statically-typed, and mostly type-safe programming language, inspired 
 ## Features
 
 - Default arguments, named parameters, and variadic parameters (including variadic named parameters)
-- Type inference, generics with type constraints, and opt-in dynamic typing
+- Type inference, generics with type constraints, and opt-in dynamic typing (with optional type constraints!)
 - Modules, with control over exported members, and packages
 - Class member visibility (i.e. `public` and `private`)
 - Sandbox inspired by [Deno](https://deno.land/)
@@ -173,7 +173,6 @@ Fido
 
 ### Types From Operations
 
-**main.mu**
 ```
 // Note that the three type annotations below are optional
 // as they can be inferred.
@@ -188,6 +187,34 @@ const DIFFERENCE_2 = A - C  // DIFFERENCE_2 is of type Float
 const PRODUCT = A * B  // PRODUCT is of type Int
 const PRODUCT_2 = A * C  // PRODUCT_2 is of type Float
 const QUOTIENT = A / B  // QUOTIENT is of type Float
+```
+
+### Generics and Constraints
+
+```
+// The constraint IsNumber returns True if T satisfies the
+// conditions, and returns False otherwise
+constraint IsNumber(T) = (T == std.Int) or (T == std.Float)
+
+generic T: IsNumber, U: IsNumber, V: IsNumber
+func add(a: T, b: U) -> V {
+    return a + b
+}
+
+add(4, 2)  // OK
+add(4.2, 1)  // OK
+add('not a number', 22)  // Error!
+```
+
+### Dynamic Typing with Constraints
+
+```
+constraint IsNumber(T) = (T == std.Int) or (T == std.Float)
+
+// The round brackets are required
+var x: (IsNumber) = 200
+x = 3.14  // OK, since 3.14 satisfies IsNumber
+x = 'not a number'  // Error!
 ```
 
 ## Building

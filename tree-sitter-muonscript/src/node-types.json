@@ -173,11 +173,26 @@
             "named": true
           }
         ]
+      },
+      "suite": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "suite",
+            "named": true
+          }
+        ]
       }
-    },
+    }
+  },
+  {
+    "type": "suite",
+    "named": true,
+    "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "import_from_statement",

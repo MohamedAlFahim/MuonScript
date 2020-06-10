@@ -37,7 +37,8 @@ module.exports = grammar({
       ),
     imported_module_members: ($) => commaSep($.module_member_import),
     named_function_definition: ($) =>
-      seq("func", field("name", $.identifier), "{", optionalDoc($), repeat($._statement), "}"),
+      seq("func", field("name", $.identifier), "{", optionalDoc($), optional(field("suite", $.suite)), "}"),
+    suite: ($) => repeat1($._statement),
 
     // Terminal
     identifier: ($) => /[A-Za-z][A-Za-z0-9_]*/,
