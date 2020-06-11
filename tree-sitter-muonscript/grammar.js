@@ -14,7 +14,8 @@ module.exports = grammar({
       choice(
         $.import_statement,
         $.import_from_statement,
-        $.named_function_definition
+        $.named_function_definition,
+        $.class_definition
       ),
     import_statement: ($) =>
       seq(
@@ -37,8 +38,28 @@ module.exports = grammar({
       ),
     imported_module_members: ($) => commaSep($.module_member_import),
     named_function_definition: ($) =>
-      seq("func", field("name", $.identifier), "{", optionalDoc($), optional(field("suite", $.suite)), "}"),
+      seq(
+        "func",
+        field("name", $.identifier),
+        optional(seq("->", field("return_type", $.dotted_name))),
+        "{",
+        optionalDoc($),
+        optional(field("suite", $.suite)),
+        "}"
+      ),
+    class_definition: ($) =>
+      seq(
+        "class",
+        field("name", $.identifier),
+        "{",
+        optionalDoc($),
+        optional(field("suite", $.class_suite)),
+        "}"
+      ),
     suite: ($) => repeat1($._statement),
+    class_suite: ($) => repeat1(
+      $.named_function_definition
+    ),
 
     // Terminal
     identifier: ($) => /[A-Za-z][A-Za-z0-9_]*/,
@@ -55,5 +76,5 @@ function dotSep(rule) {
 }
 
 function optionalDoc(dollar) {
-  return optional(field("doc", dollar.doc_comment_block))
+  return optional(field("doc", dollar.doc_comment_block));
 }

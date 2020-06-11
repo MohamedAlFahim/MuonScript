@@ -62,6 +62,10 @@
         {
           "type": "SYMBOL",
           "name": "named_function_definition"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "class_definition"
         }
       ]
     },
@@ -244,6 +248,31 @@
           }
         },
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "->"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "return_type",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "dotted_name"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "STRING",
           "value": "{"
         },
@@ -285,11 +314,75 @@
         }
       ]
     },
+    "class_definition": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "class"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "doc",
+              "content": {
+                "type": "SYMBOL",
+                "name": "doc_comment_block"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "suite",
+              "content": {
+                "type": "SYMBOL",
+                "name": "class_suite"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
+    },
     "suite": {
       "type": "REPEAT1",
       "content": {
         "type": "SYMBOL",
         "name": "_statement"
+      }
+    },
+    "class_suite": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "SYMBOL",
+        "name": "named_function_definition"
       }
     },
     "identifier": {
