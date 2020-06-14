@@ -27,7 +27,6 @@ A modern, statically-typed, and mostly type-safe programming language, inspired 
 - If a function is supposed to return a value, the programmer must return a value somewhere in the function
 - There should be only a few ways to accomplish tasks, and they should be obvious
 - Undefined behaviour should never occur
-- The grammar shouldn't be too bloated
 
 ### In the Future
 
@@ -196,7 +195,9 @@ const QUOTIENT = A / B  // QUOTIENT is of type Float
 // conditions, and returns False otherwise
 constraint IsNumber(T) = (T == std.Int) or (T == std.Float)
 
-generic T: IsNumber, U: IsNumber, V: IsNumber
+// The round brackets are required as IsNumber is a type
+// constraint rather than a concrete type
+generic T: (IsNumber), U: (IsNumber), V: (IsNumber)
 func add(a: T, b: U) -> V {
     return a + b
 }

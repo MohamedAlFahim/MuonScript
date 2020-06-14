@@ -17,26 +17,32 @@ module.exports = grammar({
         $.named_function_definition,
         $.class_definition
       ),
+    // import ☐ (as ☐)?
     import_statement: ($) =>
       seq(
         "import",
         field("module_path", $.dotted_name),
         optional(seq("as", field("alias", $.identifier)))
       ),
+    // from ☐ import ☐
     import_from_statement: ($) =>
       seq(
         "from",
         field("module_path", $.dotted_name),
         "import",
-        field("imported_members", $.imported_module_members)
+        field("imported_members", choice($.imported_module_members, $.wildcard_import))
       ),
+    // *
+    wildcard_import: ($) => "*",
     dotted_name: ($) => field("name", dotSep($.identifier)),
+    // ☐ (as ☐)?
     module_member_import: ($) =>
       seq(
         field("module_member", $.identifier),
         optional(seq("as", field("alias", $.identifier)))
       ),
     imported_module_members: ($) => commaSep($.module_member_import),
+    // func ☐ (-> ☐)? { ☐ ☐? }
     named_function_definition: ($) =>
       seq(
         "func",
@@ -47,19 +53,20 @@ module.exports = grammar({
         optional(field("suite", $.suite)),
         "}"
       ),
+    // class ☐ (extends ☐)? { ☐ ☐? }
     class_definition: ($) =>
       seq(
         "class",
         field("name", $.identifier),
+        optional(seq("extends", field("parents", $.parents_list))),
         "{",
         optionalDoc($),
         optional(field("suite", $.class_suite)),
         "}"
       ),
+    parents_list: ($) => commaSep($.dotted_name),
     suite: ($) => repeat1($._statement),
-    class_suite: ($) => repeat1(
-      $.named_function_definition
-    ),
+    class_suite: ($) => repeat1($.named_function_definition),
 
     // Terminal
     identifier: ($) => /[A-Za-z][A-Za-z0-9_]*/,
