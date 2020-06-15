@@ -90,7 +90,7 @@ func guess_matches_secret_number(guess: std.Float) -> std.Bool
 export func guessing_game() {
     const number_of_guesses = 3
     for i in std.range(number_of_guesses + 1, start=1) {
-        // i is of type Int
+        // i is of type Int.
         std.println(f'This is guess ${i}')
         std.println(f'${number_of_guesses-i} guesses remaining')
         std.print('Your guess: ')
@@ -133,14 +133,14 @@ class Dog {
     const name: std.String  // Note that name is an instance variable.
     // We can make name const because we will only assign
     // a value to it once.
-    static count = 0  // count is a class variable
+    static count = 0  // count is a class variable.
 
     func __init__(name = '?') {
         /// Constructor method of Dog class.
         /// name: The dog's name.
         // The comments above are documentation comments
         // because they have three slashes instead of two.
-        // if no name is passed, the default name ? will be used
+        // If no name is passed, the default name ? will be used.
         self.name = name
         // Note that forgetting to initialize the name
         // instance variable in the constructor
@@ -179,31 +179,33 @@ const A: std.Int = 20
 const B: std.Int = 2
 const C: std.Float = 0.5
 
-const SUM = A + B  // SUM is of type Int
-const SUM_2 = A + C  // SUM_2 is of type Float
-const DIFFERENCE = A - B  // DIFFERENCE is of type Int
-const DIFFERENCE_2 = A - C  // DIFFERENCE_2 is of type Float
-const PRODUCT = A * B  // PRODUCT is of type Int
-const PRODUCT_2 = A * C  // PRODUCT_2 is of type Float
-const QUOTIENT = A / B  // QUOTIENT is of type Float
+const SUM = A + B  // SUM is of type Int.
+const SUM_2 = A + C  // SUM_2 is of type Float.
+const DIFFERENCE = A - B  // DIFFERENCE is of type Int.
+const DIFFERENCE_2 = A - C  // DIFFERENCE_2 is of type Float.
+const PRODUCT = A * B  // PRODUCT is of type Int.
+const PRODUCT_2 = A * C  // PRODUCT_2 is of type Float.
+const QUOTIENT = A / B  // QUOTIENT is of type Float.
 ```
 
 ### Generics and Constraints
 
 ```
 // The constraint IsNumber returns True if T satisfies the
-// conditions, and returns False otherwise
+// conditions, and returns False otherwise.
 constraint IsNumber(T) = (T == std.Int) or (T == std.Float)
 
-// The round brackets are required as IsNumber is a type
-// constraint rather than a concrete type
+// We want the types of a and b to satisfy IsNumber.
+// The round brackets are important in this case as without them, 
+// MuonScript would think that we want to receive generic
+// parameters that satisfy IsNumber.
 generic T: (IsNumber), U: (IsNumber), V: (IsNumber)
 func add(a: T, b: U) -> V {
     return a + b
 }
 
-add(4, 2)  // OK
-add(4.2, 1)  // OK
+add(4, 2)  // OK.
+add(4.2, 1)  // OK.
 add('not a number', 22)  // Error!
 ```
 
@@ -211,11 +213,19 @@ add('not a number', 22)  // Error!
 
 ```
 constraint IsNumber(T) = (T == std.Int) or (T == std.Float)
+// Or constraint IsNumber(T) = T in [std.Int, std.Float].
 
-// The round brackets are required
-var x: (IsNumber) = 200
-x = 3.14  // OK, since 3.14 satisfies IsNumber
+var x: IsNumber = 200
+x = 3.14  // OK, since 3.14 satisfies IsNumber.
 x = 'not a number'  // Error!
+
+var y: IsAny = 'string'
+y = 42  // OK.
+y = 2.718  // OK.
+y = [1, 2, 3]  // OK.
+y = ['mixed', 0, 'data', ['types']]  // OK.
+// The type in the line above is DynamicList!(IsAny).
+// y can store any type!
 ```
 
 ## Building
