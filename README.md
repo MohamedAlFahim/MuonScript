@@ -219,7 +219,7 @@ var x: IsNumber = 200
 x = 3.14  // OK, since 3.14 satisfies IsNumber.
 x = 'not a number'  // Error!
 
-var y: IsAny = 'string'
+var y: std.IsAny = 'string'
 y = 42  // OK.
 y = 2.718  // OK.
 y = [1, 2, 3]  // OK.
