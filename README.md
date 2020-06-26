@@ -8,7 +8,7 @@
 
 ---
 
-A modern, statically-typed, and mostly type-safe programming language, inspired by Python and many other popular programming languages. The MuonScript "compiler" compiles source code to bytecode, to be run by the interpreter.
+A modern and statically-typed programming language, inspired by Python and many other popular programming languages. The MuonScript "compiler" compiles source code to bytecode, to be run by the interpreter.
 
 ## Features
 
@@ -25,8 +25,14 @@ A modern, statically-typed, and mostly type-safe programming language, inspired 
 
 - The programmer should always initialize constants and variables
 - If a function is supposed to return a value, the programmer must return a value somewhere in the function
-- There should be only a few ways to accomplish tasks, and they should be obvious
 - Undefined behaviour should never occur
+- The programmer can represent "option types" and "union types" using type constraints
+- `null` should have its own type: `Null`
+- If the programmer does not specify a function's return type, the return type would automatically be `Null`
+- Not returning a value or not returning at all is equivalent to returning `null`
+- Automatic reference counting should manage memory
+- The condition of an `if` statement must produce a boolean value
+- The programmer must call `Bool` on a non-boolean value to check if it is "truthy" or "falsy"
 
 ### In the Future
 
@@ -195,11 +201,8 @@ const QUOTIENT = A / B  // QUOTIENT is of type Float.
 // conditions, and returns False otherwise.
 constraint IsNumber(T) = (T == std.Int) or (T == std.Float)
 
-// We want the types of a and b to satisfy IsNumber.
-// The round brackets are important in this case as without them, 
-// MuonScript would think that we want to receive generic
-// parameters that satisfy IsNumber.
-generic T: (IsNumber), U: (IsNumber), V: (IsNumber)
+// We want the types of a and b, as well as the return type, to satisfy IsNumber.
+generic typename T: IsNumber, typename U: IsNumber, typename V: IsNumber
 func add(a: T, b: U) -> V {
     return a + b
 }
@@ -215,16 +218,16 @@ add('not a number', 22)  // Error!
 constraint IsNumber(T) = (T == std.Int) or (T == std.Float)
 // Or constraint IsNumber(T) = T in [std.Int, std.Float].
 
-var x: IsNumber = 200
+var x: dynamic!(IsNumber) = 200
 x = 3.14  // OK, since 3.14 satisfies IsNumber.
 x = 'not a number'  // Error!
 
-var y: std.IsAny = 'string'
+var y: dynamic!(std.IsAny) = 'string'
 y = 42  // OK.
 y = 2.718  // OK.
 y = [1, 2, 3]  // OK.
 y = ['mixed', 0, 'data', ['types']]  // OK.
-// The type in the line above is DynamicList!(IsAny).
+// The type in the line above is DynamicList!(dynamic!(IsAny)).
 // y can store any type!
 ```
 
