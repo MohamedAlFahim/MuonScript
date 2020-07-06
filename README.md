@@ -13,7 +13,10 @@ A modern and statically-typed programming language, inspired by Python and many 
 ## Features
 
 - Default arguments, named parameters, and variadic parameters (including variadic named parameters)
-- Type inference, generics with type constraints, and opt-in dynamic typing (with optional type constraints!)
+- Type inference, generics with type constraints, and opt-in dynamic typing (with type constraints!)
+- Duck typing (with type constraints!)
+- Function decorators, instance method decorators, and static/class method decorators
+- Markdown subset documentation comments
 - Modules, with control over exported members, and packages
 - Class member visibility (i.e. `public` and `private`)
 - Sandbox inspired by [Deno](https://deno.land/)
@@ -152,17 +155,17 @@ class Dog {
     const name: std.String  // Note that name is an instance variable.
     // We can make name const because we will only assign
     // a value to it once.
-    static count = 0  // count is a class variable.
+    static count = 0  // count is a static/class variable.
 
     func __init__(name = '?') {
-        /// Constructor method of Dog class.
-        /// name: The dog's name.
+        /// Constructor method of `Dog` class.
+        /// - name: The dog's name.
         // The comments above are documentation comments
         // because they have three slashes instead of two.
         // If no name is passed, the default name ? will be used.
         self.name = name
         // Note that forgetting to initialize the name
-        // instance variable in the constructor
+        // instance variable before the end of the constructor
         // will result in an error.
         cls.count += 1
     }
@@ -212,9 +215,9 @@ const QUOTIENT = A / B  // QUOTIENT is of type Float.
 ### Generics and Constraints
 
 ```
-// The constraint IsNumber returns True if T satisfies the
-// conditions, and returns False otherwise.
-constraint IsNumber(T) = (T == std.Int) or (T == std.Float)
+// The constraint IsNumber returns True if the type, T, satisfies
+// the conditions, and returns False otherwise.
+constraint IsNumber = (T == std.Int) or (T == std.Float)
 
 // We want the types of a and b, as well as the return type, to satisfy IsNumber.
 generic typename T: IsNumber, typename U: IsNumber, typename V: IsNumber
@@ -225,13 +228,30 @@ func add(a: T, b: U) -> V {
 add(4, 2)  // OK.
 add(4.2, 1)  // OK.
 add('not a number', 22)  // Error!
+
+// In this case, we want the types of a and b to be equal.
+generic typename T: IsNumber, typename U: IsNumber
+func add_2(a: T, b: T) -> U {
+    return a + b
+}
+
+add(4, 2)  // OK.
+add(4.2, 1)  // Error!
+
+// In this case, we want all three types to be equal.
+generic typename T: IsNumber
+func div(a: T, b: T) -> T {
+    return a / b
+}
+
+div(1, 2)  // Error!
 ```
 
 ### Dynamic Typing with Constraints
 
 ```
-constraint IsNumber(T) = (T == std.Int) or (T == std.Float)
-// Or constraint IsNumber(T) = T in [std.Int, std.Float].
+constraint IsNumber = (T == std.Int) or (T == std.Float)
+// Or constraint IsNumber = T in [std.Int, std.Float].
 
 var x: dynamic!(IsNumber) = 200
 x = 3.14  // OK, since 3.14 satisfies IsNumber.
@@ -244,6 +264,20 @@ y = [1, 2, 3]  // OK.
 y = ['mixed', 0, 'data', ['types']]  // OK.
 // The type in the line above is DynamicList!(dynamic!(IsAny)).
 // y can store any type!
+```
+
+### Optional Type
+
+```
+typealias OptionalInt = std.Optional!(std.Int)
+// Optional can be defined as
+// typealias Optional!(U) = dynamic!(T in [U, std.Null])
+
+var i: OptionalInt = 9000
+i = null  // OK.
+const default_int = 0
+std.println(std.not_null_or_else(i, default_int))  // Prints 0.
+// If i was not null, i would be printed.
 ```
 
 ## Building
