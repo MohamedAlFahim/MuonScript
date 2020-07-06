@@ -33,6 +33,7 @@ A modern and statically-typed programming language, inspired by Python and many 
 - Automatic reference counting should manage memory
 - The condition of an `if` statement must produce a boolean value
 - The programmer must call `Bool` on a non-boolean value to check if it is "truthy" or "falsy"
+- By default, objects cannot be null
 
 ### In the Future
 
@@ -44,6 +45,7 @@ A modern and statically-typed programming language, inspired by Python and many 
 ### Hello World
 
 **main.mu**
+
 ```
 // Print Hello world! followed by a newline.
 // It is equivalent to
@@ -51,7 +53,9 @@ A modern and statically-typed programming language, inspired by Python and many 
 // or std.print('Hello world!', end='\n').
 std.println('Hello world!')
 ```
+
 #### > Output
+
 ```
 $ muonscript run main.mu
 Hello world!
@@ -60,6 +64,7 @@ Hello world!
 ### Command-Line Arguments
 
 **main.mu**
+
 ```
 // __args__ has the type DynamicList!(String).
 for each_arg in __args__ {
@@ -70,7 +75,9 @@ for each_arg in __args__ {
     // or std.println(each_arg, start='> ')
 }
 ```
+
 #### > Output
+
 ```
 $ muonscript run main.mu "Argument 1" "Argument 2"
 > Argument 1
@@ -80,6 +87,7 @@ $ muonscript run main.mu "Argument 1" "Argument 2"
 ### Guessing Game
 
 **package/guessing_game.mu**
+
 ```
 // SECRET_NUMBER is inferred to be of type Float,
 // so you don't have to write
@@ -112,13 +120,17 @@ export func guessing_game() {
     std.println('You lost.')
 }
 ```
+
 **main.mu**
+
 ```
 from package.guessing_game import guessing_game as game
 
 game()
 ```
+
 #### > Output
+
 ```
 $ muonscript run main.mu
 This is guess 1
@@ -134,6 +146,7 @@ You won!
 ### Dog
 
 **main.mu**
+
 ```
 class Dog {
     const name: std.String  // Note that name is an instance variable.
@@ -167,7 +180,9 @@ nameless = Dog()
 nameless.bark()
 std.println(Dog.count)
 ```
+
 #### > Output
+
 ```
 $ muonscript run main.mu
 Fido: Woof!
@@ -241,10 +256,13 @@ tree-sitter generate && tree-sitter build-wasm
 ```
 
 #### Quickly Developing Grammar
+
 If you want to change the grammar.js file and quickly preview the changes, you can keep the browser tab with "http://127.0.0.1:8000/" open and then run:
+
 ```
 tree-sitter generate && tree-sitter build-wasm && tree-sitter web-ui --quiet
 ```
+
 and refresh the browser tab, after each time you change the grammar.js.
 
 ## Copyright
