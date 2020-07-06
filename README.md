@@ -72,8 +72,7 @@ Hello world!
 // __args__ has the type DynamicList!(String).
 for each_arg in __args__ {
     // each_arg is const by default.
-    // The f string prefix is used for embedding values
-    // inside strings.
+    // The f string prefix is used for embedding values inside strings.
     std.println(f'> ${each_arg}')
     // or std.println(each_arg, start='> ')
 }
@@ -92,11 +91,10 @@ $ muonscript run main.mu "Argument 1" "Argument 2"
 **package/guessing_game.mu**
 
 ```
-// SECRET_NUMBER is inferred to be of type Float,
-// so you don't have to write
+// SECRET_NUMBER is inferred to be of type Float, so you don't have to write
 // const SECRET_NUMBER: std.Float = 3.14.
-// Also, since it isn't exported,
-// SECRET_NUMBER won't be visible outside this module.
+// Also, since it isn't exported, SECRET_NUMBER won't be visible outside this
+// module.
 const SECRET_NUMBER = 3.14
 
 func guess_matches_secret_number(guess: std.Float) -> std.Bool
@@ -153,20 +151,18 @@ You won!
 ```
 class Dog {
     const name: std.String  // Note that name is an instance variable.
-    // We can make name const because we will only assign
-    // a value to it once.
+    // We can make name const because we will only assign a value to it once.
     static count = 0  // count is a static/class variable.
 
     func __init__(name = '?') {
         /// Constructor method of `Dog` class.
         /// - name: The dog's name.
-        // The comments above are documentation comments
-        // because they have three slashes instead of two.
+        // The comments above are documentation comments because they have three
+        // slashes instead of two.
         // If no name is passed, the default name ? will be used.
         self.name = name
-        // Note that forgetting to initialize the name
-        // instance variable before the end of the constructor
-        // will result in an error.
+        // Note that forgetting to initialize the name instance variable before the
+        // end of the constructor will result in an error.
         cls.count += 1
     }
 
@@ -197,8 +193,7 @@ Fido
 ### Types From Operations
 
 ```
-// Note that the three type annotations below are optional
-// as they can be inferred.
+// Note that the three type annotations below are optional as they can be inferred.
 const A: std.Int = 20
 const B: std.Int = 2
 const C: std.Float = 0.5
@@ -215,8 +210,8 @@ const QUOTIENT = A / B  // QUOTIENT is of type Float.
 ### Generics and Constraints
 
 ```
-// The constraint IsNumber returns True if the type, T, satisfies
-// the conditions, and returns False otherwise.
+// The constraint IsNumber returns True if the type, T, satisfies the conditions,
+// and returns False otherwise.
 constraint IsNumber = (T == std.Int) or (T == std.Float)
 
 // We want the types of a and b, as well as the return type, to satisfy IsNumber.
@@ -269,9 +264,10 @@ y = ['mixed', 0, 'data', ['types']]  // OK.
 ### Optional Type
 
 ```
-typealias OptionalInt = std.Optional!(std.Int)
+typealias OptionalInt = dynamic!(std.Optional!(std.Int))
 // Optional can be defined as
-// typealias Optional!(U) = dynamic!(T in [U, std.Null])
+// generic typename U: (U != std.Null)
+// constraint Optional = T in [U, std.Null]
 
 var i: OptionalInt = 9000
 i = null  // OK.
