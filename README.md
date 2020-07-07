@@ -276,6 +276,21 @@ std.println(std.not_null_or_else(i, default_int))  // Prints 0.
 // If i was not null, i would be printed.
 ```
 
+### More Complex Constraints
+
+```
+// Note that StaticList!(Int, 2) and StaticList!(Int, 3) are different types.
+
+generic typename U, L: (L > 2)
+constraint HasMoreThanTwoItems = T == std.StaticList!(U, L)
+// The contained data type and the length can be deduced.
+
+var list: dynamic!(HasMoreThanTwoItems) = std.StaticList(1, 2, 4)
+list = std.StaticList(1, 2, 4, 8)  // OK.
+// or list = std.StaticList(*[1, 2, 4, 8])
+list = std.StaticList(4, 2)  // Error, as 2 is not greater than 2!
+```
+
 ## Building
 
 ### Tree-sitter Parser
