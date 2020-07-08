@@ -248,16 +248,18 @@ div(1, 2)  // Error!
 constraint IsNumber = (T == std.Int) or (T == std.Float)
 // Or constraint IsNumber = T in [std.Int, std.Float].
 
-var x: dynamic!(IsNumber) = 200
+dynamic x: IsNumber = 200
+// Or var x: dynamic!(IsNumber) = 200.
 x = 3.14  // OK, since 3.14 satisfies IsNumber.
 x = 'not a number'  // Error!
 
-var y: dynamic!(std.IsAny) = 'string'
+dynamic y = 'string'
+// Or var y: dynamic!(std.Any) = 'string'.
 y = 42  // OK.
 y = 2.718  // OK.
 y = [1, 2, 3]  // OK.
 y = ['mixed', 0, 'data', ['types']]  // OK.
-// The type in the line above is DynamicList!(dynamic!(IsAny)).
+// The type in the line above is DynamicList!(dynamic!(Any)).
 // y can store any type!
 ```
 
@@ -266,8 +268,8 @@ y = ['mixed', 0, 'data', ['types']]  // OK.
 ```
 typealias OptionalInt = dynamic!(std.Optional!(std.Int))
 // Optional can be defined as
-// generic typename U: (U != std.Null)
-// constraint Optional = T in [U, std.Null]
+// generic typename ContainedType: (ContainedType != std.Null)
+// constraint Optional = T in [ContainedType, std.Null]
 
 var i: OptionalInt = 9000
 i = null  // OK.
@@ -281,11 +283,12 @@ std.println(std.not_null_or_else(i, default_int))  // Prints 0.
 ```
 // Note that StaticList!(Int, 2) and StaticList!(Int, 3) are different types.
 
-generic typename U, L: (L > 2)
-constraint HasMoreThanTwoItems = T == std.StaticList!(U, L)
-// The contained data type and the length can be deduced.
+generic typename ElementType, Length: (Length > 2)
+constraint HasMoreThanTwoItems = T == std.StaticList!(ElementType, Length)
+// The element data type and the length can be deduced.
 
-var list: dynamic!(HasMoreThanTwoItems) = std.StaticList(1, 2, 4)
+dynamic list: HasMoreThanTwoItems = std.StaticList(1, 2, 4)
+// Or var list: dynamic!(HasMoreThanTwoItems) = std.StaticList(1, 2, 4).
 list = std.StaticList(1, 2, 4, 8)  // OK.
 // or list = std.StaticList(*[1, 2, 4, 8])
 list = std.StaticList(4, 2)  // Error, as 2 is not greater than 2!
